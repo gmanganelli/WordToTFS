@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ALMAPPAZD02WPRO'
+  name: 'ALMAPPAZD02WPRO'
 
 variables:
   solution: '**/*.sln'
