@@ -6,7 +6,7 @@ trigger:
       - bugfix/*
 
 pool:
-  name: 'almatoolbox-default-windows'
+  name: 'Azure Pipelines'
   demands:
     - DotNetFramework
     - msbuild
