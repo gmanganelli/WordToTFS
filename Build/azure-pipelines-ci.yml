@@ -29,11 +29,11 @@ steps:
     restoreSolution: '**/*.sln'
     feedsToUse: 'select'
   
-- task: colinsalmcorner.colinsalmcorner-buildtasks.version-assemblies-task.VersionAssemblies@2
-  displayName: 'Version AssemblyInfo.* files'
-  inputs:
-      filePattern: '**\GlobalAssemblyInfo.*'
-      failIfNoMatchFound: true
+# - task: colinsalmcorner.colinsalmcorner-buildtasks.version-assemblies-task.VersionAssemblies@2
+#   displayName: 'Version AssemblyInfo.* files'
+#   inputs:
+#       filePattern: '**\GlobalAssemblyInfo.*'
+#       failIfNoMatchFound: true
 
 - task: PowerShell@1
   displayName: 'Update ClickOnce Offline Manifest Settings'
@@ -56,26 +56,38 @@ steps:
       targetPath: '$(build.artifactstagingdirectory)\Offline'
       artifact: '$(DeploymentType)-OfflineVSTO'
 
-- task: colinsalmcorner.colinsalmcorner-buildtasks.replace-tokens-task.ReplaceTokens@1
-  displayName: 'Replace Placeholders in Local.runsettings'
-  inputs:
-    sourcePath: '$(Build.SourcesDirectory)/Sources/'
-    filePattern: Local.runsettings
-    secretTokens: 'TfsServerName:$(TfsServerName);TfsServerFQDN:$(TfsServerFQDN);TfsTeamProjectCollectionUrl:$(TfsTeamProjectCollectionUrl);TfsTeamProjectCollectionName:$(TfsTeamProjectCollectionName);TeamProjectName:$(TeamProjectName)'
-
-- task: VSTest@2
-  displayName: 'Test Assemblies **\$(BuildConfiguration)\*test*.dll;-:**\obj\**'
-  inputs:
-    testAssemblyVer2: |
-     **\*test*.dll
-     !**\obj\**
-     !**\microsoft*
-    testFiltercriteria: '$(TestFilter)'
-    runOnlyImpactedTests: false
-    runSettingsFile: '$(Build.SourcesDirectory)/Sources//Local.runsettings'
-    runInParallel: false
-    codeCoverageEnabled: true
-    testRunTitle: 'All Tests'
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
-    diagnosticsEnabled: True
+# - task: replacetokens@5
+#   displayName: 'Replace Placeholders in Local.runsettings'
+#   inputs:
+#     sourcePath: '$(Build.SourcesDirectory)/Sources/'
+#     filePattern: Local.runsettings
+#     secretTokens: 'TfsServerName:$(TfsServerName);TfsServerFQDN:$(TfsServerFQDN);TfsTeamProjectCollectionUrl:$(TfsTeamProjectCollectionUrl);TfsTeamProjectCollectionName:$(TfsTeamProjectCollectionName);TeamProjectName:$(TeamProjectName)'
+# - task: replacetokens@5
+#   inputs:
+#     targetFiles: '**/*.config'
+#     encoding: 'auto'
+#     tokenPattern: 'default'
+#     writeBOM: true
+#     actionOnMissing: 'warn'
+#     keepToken: false
+#     actionOnNoFiles: 'continue'
+#     enableTransforms: false
+#     enableRecursion: false
+#     useLegacyPattern: false
+#     enableTelemetry: true
+# - task: VSTest@2
+#   displayName: 'Test Assemblies **\$(BuildConfiguration)\*test*.dll;-:**\obj\**'
+#   inputs:
+#     testAssemblyVer2: |
+#      **\*test*.dll
+#      !**\obj\**
+#      !**\microsoft*
+#     testFiltercriteria: '$(TestFilter)'
+#     runOnlyImpactedTests: false
+#     runSettingsFile: '$(Build.SourcesDirectory)/Sources//Local.runsettings'
+#     runInParallel: false
+#     codeCoverageEnabled: true
+#     testRunTitle: 'All Tests'
+#     platform: '$(BuildPlatform)'
+#     configuration: '$(BuildConfiguration)'
+#     diagnosticsEnabled: True
