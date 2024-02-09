@@ -6,7 +6,8 @@ trigger:
       - bugfix/*
 
 pool:
-  name: 'Internal'
+  name: '
+almatoolbox-default-windows'
   demands:
     - DotNetFramework
     - msbuild
